@@ -407,6 +407,10 @@ public final class Prefs {
         return getBoolean(R.string.preference_key_download_reading_list_articles, true);
     }
 
+    public static boolean useTor() {
+        return getBoolean(R.string.preference_key_use_tor, false);
+    }
+
     private static String getLastRunTimeKey(@NonNull String task) {
         return getKey(R.string.preference_key_last_run_time_format, task);
     }

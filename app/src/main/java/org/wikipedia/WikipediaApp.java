@@ -66,6 +66,9 @@ import io.reactivex.internal.functions.Functions;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 
+import info.guardianproject.netcipher.proxy.OrbotHelper;
+import info.guardianproject.netcipher.webkit.WebkitProxy;
+
 import static org.apache.commons.lang3.StringUtils.defaultString;
 import static org.wikipedia.settings.Prefs.getTextSizeMultiplier;
 import static org.wikipedia.util.DimenUtil.getFontSizeFromSp;
@@ -90,6 +93,9 @@ public class WikipediaApp extends Application {
     private List<Tab> tabList = new ArrayList<>();
 
     private WikipediaZeroHandler zeroHandler;
+
+    public static final String PROXY_HOST = "localhost";
+    public static final int PROXY_PORT = 8118;
 
     private static WikipediaApp INSTANCE;
 
@@ -193,6 +199,7 @@ public class WikipediaApp extends Application {
         initTabs();
 
         enableWebViewDebugging();
+        setProxy();
 
         ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
                 .setNetworkFetcher(new CacheableOkHttpNetworkFetcher(OkHttpConnectionFactory.getClient()))
@@ -402,6 +409,26 @@ public class WikipediaApp extends Application {
     private void enableWebViewDebugging() {
         if (BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true);
+        }
+    }
+
+    public boolean enableTorToggle() {
+        return ReleaseUtil.isPreBetaRelease()
+                && OrbotHelper.isOrbotInstalled(this);
+    }
+
+    public void setProxy() {
+        if (!enableTorToggle()) {
+            return;
+        }
+        final String appClass = getClass().getCanonicalName();
+        try {
+            if (Prefs.useTor()) {
+                // `null` is fine here since `minSdkVersion >= Build.VERSION_CODES.HONEYCOMB_MR2`
+                WebkitProxy.setProxy(appClass, this, null, PROXY_HOST, PROXY_PORT);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -1,7 +1,11 @@
 package org.wikipedia.settings;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
@@ -50,6 +54,32 @@ class SettingsPreferenceLoader extends BasePreferenceLoader {
             }
             return true;
         });
+
+        if (ReleaseUtil.isPreBetaRelease()) {
+            loadPreferences(R.xml.preferences_experimental);
+            Preference offlineLibPref = findPreference(R.string.preference_key_enable_offline_library);
+            offlineLibPref.setOnPreferenceChangeListener(new OfflineLibraryEnableListener());
+            offlineLibPref.setSummary(StringUtil.fromHtml(getPreferenceHost().getString(R.string.preference_summary_enable_offline_library)));
+
+            Preference useTorPreference = findPreference(R.string.preference_key_use_tor);
+            useTorPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                WikipediaApp app = WikipediaApp.getInstance();
+                final int delayMillis = 200;
+                final Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    // Restart the app to force connection pool eviction
+                    Intent i = app.getPackageManager().getLaunchIntentForPackage(app.getPackageName());
+                    PendingIntent pi = PendingIntent.getActivity(app, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+                    AlarmManager mgr = (AlarmManager) app.getSystemService(Context.ALARM_SERVICE);
+                    mgr.set(AlarmManager.RTC, System.currentTimeMillis() + delayMillis, pi);
+                    Runtime.getRuntime().exit(0);
+                }, delayMillis);
+                return true;
+            });
+            if (!WikipediaApp.getInstance().enableTorToggle()) {
+                useTorPreference.setVisible(false);
+            }
+        }
 
         loadPreferences(R.xml.preferences_about);
 

@@ -4,6 +4,17 @@
 
     <PreferenceCategory android:title="@string/preferences_heading_experimental">
 
+        <org.wikipedia.settings.SwitchPreferenceWithLinks
+            android:key="@string/preference_key_enable_offline_library"
+            android:defaultValue="false"
+            android:title="@string/preference_title_enable_offline_library"
+            android:summary="@string/preference_summary_enable_offline_library" />
+        <SwitchPreferenceCompat
+            android:key="@string/preference_key_use_tor"
+            android:defaultValue="false"
+            android:title="@string/preference_title_use_tor"
+            android:summary="@string/preference_summary_use_tor" />
+
     </PreferenceCategory>
 
 </android.support.v7.preference.PreferenceScreen>

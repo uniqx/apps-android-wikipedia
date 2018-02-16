@@ -366,6 +366,11 @@
     <string name="text_size_percent_default">%s (Default)</string>
     <!-- /Theme -->
 
+    <!-- Tor -->
+    <string name="preference_title_use_tor">Use Tor</string>
+    <string name="preference_summary_use_tor">Route traffic through Orbot.</string>
+    <!-- /Tor -->
+
     <!-- Reading lists -->
     <string name="nav_item_reading_lists">My lists</string>
     <string name="reading_list_untitled">Untitled</string>
