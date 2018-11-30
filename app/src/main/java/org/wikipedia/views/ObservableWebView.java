@@ -11,6 +11,7 @@ import android.webkit.WebView;
 
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.events.WebViewInvalidateEvent;
+import org.wikipedia.net.ProxyHelper;
 import org.wikipedia.util.DimenUtil;
 
 import java.util.ArrayList;
@@ -156,6 +157,8 @@ public class ObservableWebView extends WebView {
         onUpOrCancelMotionEventListeners = new ArrayList<>();
         onContentHeightChangedListeners = new ArrayList<>();
         touchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+
+        new ProxyHelper(getContext()).configureWebViev(this);
     }
 
     @Override

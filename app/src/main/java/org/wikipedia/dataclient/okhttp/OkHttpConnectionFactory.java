@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.dataclient.SharedPreferenceCookieManager;
+import org.wikipedia.net.ProxyHelper;
 import org.wikipedia.settings.Prefs;
 import org.wikipedia.settings.RbSwitch;
 
@@ -31,19 +32,22 @@ public final class OkHttpConnectionFactory {
 
     @NonNull
     private static OkHttpClient createClient() {
-        return new OkHttpClient.Builder()
-                .cookieJar(SharedPreferenceCookieManager.getInstance())
-                .cache(NET_CACHE)
-                .addInterceptor(new HttpLoggingInterceptor().setLevel(Prefs.getRetrofitLogLevel()))
-                .addInterceptor(new UnsuccessfulResponseInterceptor())
-                .addInterceptor(new StatusResponseInterceptor(RbSwitch.INSTANCE))
-                .addNetworkInterceptor(new StripMustRevalidateResponseInterceptor())
-                .addInterceptor(new CommonHeaderRequestInterceptor())
-                .addInterceptor(new DefaultMaxStaleRequestInterceptor())
-                .addInterceptor(new OfflineCacheInterceptor(SAVE_CACHE))
-                .addInterceptor(new WikipediaZeroResponseInterceptor(WikipediaApp.getInstance().getWikipediaZeroHandler()))
-                .addInterceptor(new TestStubInterceptor())
-                .build();
+
+        WikipediaApp app = WikipediaApp.getInstance();
+
+        return new ProxyHelper(app).okHttp(new OkHttpClient.Builder()
+                    .cookieJar(SharedPreferenceCookieManager.getInstance())
+                    .cache(NET_CACHE)
+                    .addInterceptor(new HttpLoggingInterceptor().setLevel(Prefs.getRetrofitLogLevel()))
+                    .addInterceptor(new UnsuccessfulResponseInterceptor())
+                    .addInterceptor(new StatusResponseInterceptor(RbSwitch.INSTANCE))
+                    .addNetworkInterceptor(new StripMustRevalidateResponseInterceptor())
+                    .addInterceptor(new CommonHeaderRequestInterceptor())
+                    .addInterceptor(new DefaultMaxStaleRequestInterceptor())
+                    .addInterceptor(new OfflineCacheInterceptor(SAVE_CACHE))
+                    .addInterceptor(new WikipediaZeroResponseInterceptor(app.getWikipediaZeroHandler()))
+                    .addInterceptor(new TestStubInterceptor())
+                ).build();
     }
 
     private OkHttpConnectionFactory() {
