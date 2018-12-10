@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.wikipedia.Constants;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.analytics.LoginFunnel;
 import org.wikipedia.language.LanguageSettingsInvokeSource;
 import org.wikipedia.login.LoginActivity;

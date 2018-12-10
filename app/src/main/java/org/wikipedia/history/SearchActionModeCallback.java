@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.util.DeviceUtil;
 
 public abstract class SearchActionModeCallback implements ActionMode.Callback {

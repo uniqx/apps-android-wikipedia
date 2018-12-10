@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

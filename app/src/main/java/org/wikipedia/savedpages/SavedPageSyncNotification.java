@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import org.wikipedia.Constants;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.views.NotificationWithProgressBar;
 
 public final class SavedPageSyncNotification extends BroadcastReceiver {

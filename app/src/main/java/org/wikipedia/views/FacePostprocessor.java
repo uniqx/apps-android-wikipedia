@@ -15,7 +15,7 @@ import android.support.v7.graphics.Palette;
 
 import com.facebook.imagepipeline.request.BasePostprocessor;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.settings.Prefs;
 import org.wikipedia.util.MathUtil;

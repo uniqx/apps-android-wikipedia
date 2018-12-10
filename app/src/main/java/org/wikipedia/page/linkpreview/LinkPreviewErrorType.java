@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.util.ThrowableUtil;
 
 enum LinkPreviewErrorType {

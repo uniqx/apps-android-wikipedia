@@ -5,7 +5,7 @@ import android.icu.text.RelativeDateTimeFormatter;
 import android.os.Build;
 import android.support.annotation.NonNull;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.feed.model.UtcDate;
 

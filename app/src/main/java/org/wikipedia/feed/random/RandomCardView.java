@@ -6,7 +6,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.dataclient.ServiceFactory;
 import org.wikipedia.feed.view.StaticCardView;

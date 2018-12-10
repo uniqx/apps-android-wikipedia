@@ -7,7 +7,7 @@ import android.os.Build;
 import android.support.v7.preference.EditTextPreference;
 import android.util.AttributeSet;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 public class EditTextAutoSummarizePreference extends EditTextPreference {
     protected static final int DEFAULT_STYLE_ATTR = R.attr.editTextAutoSummarizePreferenceStyle;

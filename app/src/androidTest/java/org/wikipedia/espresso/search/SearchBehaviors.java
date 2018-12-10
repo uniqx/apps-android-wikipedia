@@ -3,7 +3,7 @@ package org.wikipedia.espresso.search;
 import android.support.annotation.NonNull;
 import android.support.test.espresso.ViewInteraction;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.espresso.util.ScreenshotTools;
 import org.wikipedia.espresso.util.ViewTools;
 

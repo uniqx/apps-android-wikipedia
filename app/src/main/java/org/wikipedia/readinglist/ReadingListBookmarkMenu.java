@@ -11,7 +11,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.page.PageTitle;
 import org.wikipedia.readinglist.database.ReadingList;
 import org.wikipedia.readinglist.database.ReadingListDbHelper;

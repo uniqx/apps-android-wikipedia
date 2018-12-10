@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.wikipedia.BuildConfig;
+import info.guardianproject.apt.wikipedia.BuildConfig;
 import org.wikipedia.util.DimenUtil;
 
 import java.util.ArrayList;

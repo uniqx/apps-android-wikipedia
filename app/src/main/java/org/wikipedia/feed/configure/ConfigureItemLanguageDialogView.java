@@ -11,7 +11,7 @@ import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.views.DefaultViewHolder;
 

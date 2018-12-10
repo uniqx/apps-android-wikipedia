@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 import static android.support.v4.content.ContextCompat.getColor;
 import static android.support.v4.graphics.drawable.DrawableCompat.setTint;

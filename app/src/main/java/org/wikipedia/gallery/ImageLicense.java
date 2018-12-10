@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 import java.io.Serializable;
 import java.util.Locale;

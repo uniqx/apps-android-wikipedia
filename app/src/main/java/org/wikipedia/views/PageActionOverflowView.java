@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.page.tabs.Tab;
 import org.wikipedia.util.DimenUtil;
 import org.wikipedia.util.FeedbackUtil;

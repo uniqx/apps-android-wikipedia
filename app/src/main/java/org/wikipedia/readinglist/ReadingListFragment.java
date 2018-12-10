@@ -35,7 +35,7 @@ import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipedia.Constants;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.analytics.ReadingListsFunnel;
 import org.wikipedia.events.PageDownloadEvent;

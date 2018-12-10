@@ -14,8 +14,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.widget.Toast;
 
-import org.wikipedia.BuildConfig;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.BuildConfig;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.page.PageTitle;
 import org.wikipedia.util.log.L;
 

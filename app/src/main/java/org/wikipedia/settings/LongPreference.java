@@ -7,7 +7,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 public class LongPreference extends EditTextAutoSummarizePreference {
     private static final int[] DEFAULT_STYLEABLE = R.styleable.LongPreference;

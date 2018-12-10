@@ -10,7 +10,7 @@ import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.bridge.CommunicationBridge;
 import org.wikipedia.language.LanguageUtil;

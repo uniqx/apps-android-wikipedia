@@ -15,7 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.activity.BaseActivity;
 import org.wikipedia.analytics.CreateAccountFunnel;

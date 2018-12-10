@@ -2,7 +2,7 @@ package org.wikipedia.feed.searchbar;
 
 import android.content.Context;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.feed.view.DefaultFeedCardView;
 import org.wikipedia.util.FeedbackUtil;
 import org.wikipedia.util.ResourceUtil;

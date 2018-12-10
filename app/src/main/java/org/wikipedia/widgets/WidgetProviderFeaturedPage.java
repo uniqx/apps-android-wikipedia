@@ -15,7 +15,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import org.wikipedia.Constants;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.dataclient.page.PageClient;
 import org.wikipedia.dataclient.page.PageClientFactory;

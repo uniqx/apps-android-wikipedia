@@ -13,7 +13,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
 
 import org.wikipedia.Constants;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.util.MathUtil;
 
 public class NotificationWithProgressBar {

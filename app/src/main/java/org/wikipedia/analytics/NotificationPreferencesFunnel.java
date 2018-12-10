@@ -3,7 +3,7 @@ package org.wikipedia.analytics;
 import android.support.annotation.NonNull;
 
 import org.json.JSONObject;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.json.GsonMarshaller;
 import org.wikipedia.notifications.Notification;

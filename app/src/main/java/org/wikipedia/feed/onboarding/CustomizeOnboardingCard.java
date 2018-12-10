@@ -2,7 +2,7 @@ package org.wikipedia.feed.onboarding;
 
 import android.support.annotation.NonNull;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.feed.announcement.Announcement;
 import org.wikipedia.feed.model.CardType;

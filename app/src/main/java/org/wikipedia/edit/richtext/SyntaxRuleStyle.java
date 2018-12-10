@@ -6,7 +6,7 @@ import android.graphics.Typeface;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.util.ResourceUtil;
 
 import static org.wikipedia.util.ResourceUtil.getThemedColor;

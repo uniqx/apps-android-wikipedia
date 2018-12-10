@@ -39,7 +39,7 @@ import net.hockeyapp.android.metrics.MetricsManager;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipedia.Constants;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.activity.BaseActivity;
 import org.wikipedia.analytics.IntentFunnel;

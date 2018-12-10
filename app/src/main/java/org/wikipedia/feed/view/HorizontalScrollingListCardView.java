@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.feed.model.Card;
 import org.wikipedia.util.DimenUtil;
 import org.wikipedia.views.DefaultRecyclerAdapter;

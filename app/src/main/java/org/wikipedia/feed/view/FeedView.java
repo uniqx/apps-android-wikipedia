@@ -8,7 +8,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.crash.RemoteLogException;
 import org.wikipedia.util.log.L;
 import org.wikipedia.views.AutoFitRecyclerView;

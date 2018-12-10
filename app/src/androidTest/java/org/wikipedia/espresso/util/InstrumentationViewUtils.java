@@ -3,7 +3,7 @@ package org.wikipedia.espresso.util;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.ViewInteraction;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;

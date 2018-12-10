@@ -23,7 +23,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.wikipedia.Constants;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.activity.BaseActivity;
 import org.wikipedia.analytics.EditFunnel;

@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.wikipedia.Constants;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.analytics.ReadingListsFunnel;
 import org.wikipedia.model.EnumCode;
 import org.wikipedia.model.EnumCodeMap;

@@ -3,7 +3,7 @@ package org.wikipedia.feed.onboarding;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.dataclient.WikiSite;
 import org.wikipedia.feed.FeedCoordinator;
 import org.wikipedia.feed.announcement.Announcement;

@@ -6,7 +6,7 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.view_floating_queue.view.*
-import org.wikipedia.R
+import info.guardianproject.apt.wikipedia.R
 import org.wikipedia.WikipediaApp
 import org.wikipedia.page.PageTitle
 import org.wikipedia.util.ResourceUtil

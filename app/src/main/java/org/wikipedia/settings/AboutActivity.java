@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.wikipedia.BuildConfig;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.BuildConfig;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.activity.BaseActivity;
 import org.wikipedia.richtext.RichTextUtil;
 import org.wikipedia.util.FeedbackUtil;

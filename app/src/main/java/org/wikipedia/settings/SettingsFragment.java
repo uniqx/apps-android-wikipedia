@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.events.ReadingListsEnableSyncStatusEvent;
 import org.wikipedia.events.ReadingListsEnabledStatusEvent;

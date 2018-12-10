@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.util.log.L;
 
 /** {@link RecyclerView} that invokes a callback when the number of columns should be updated. */

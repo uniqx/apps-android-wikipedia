@@ -6,7 +6,7 @@ import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.auth.AccountUtil;
 import org.wikipedia.dataclient.Service;

@@ -11,7 +11,7 @@ import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.json.GsonMarshaller;
 import org.wikipedia.json.GsonUnmarshaller;

@@ -17,7 +17,7 @@ import android.widget.ScrollView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.analytics.EditFunnel;
 import org.wikipedia.bridge.CommunicationBridge;

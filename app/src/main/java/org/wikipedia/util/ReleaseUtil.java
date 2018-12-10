@@ -5,7 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 
-import org.wikipedia.BuildConfig;
+import info.guardianproject.apt.wikipedia.BuildConfig;
 import org.wikipedia.settings.Prefs;
 
 public final class ReleaseUtil {

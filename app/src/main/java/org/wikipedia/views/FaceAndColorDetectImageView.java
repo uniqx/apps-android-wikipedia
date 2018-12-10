@@ -14,7 +14,7 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 import static org.wikipedia.settings.Prefs.isImageDownloadEnabled;
 

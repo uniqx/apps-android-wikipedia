@@ -3,7 +3,7 @@ package org.wikipedia.database.contract;
 import android.content.ContentResolver;
 import android.net.Uri;
 
-import org.wikipedia.BuildConfig;
+import info.guardianproject.apt.wikipedia.BuildConfig;
 
 @SuppressWarnings("checkstyle:interfaceistype")
 public interface AppContentProviderContract {

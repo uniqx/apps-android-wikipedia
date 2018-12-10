@@ -12,7 +12,7 @@ import android.text.style.BulletSpan;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.util.DimenUtil;
 import org.wikipedia.util.StringUtil;

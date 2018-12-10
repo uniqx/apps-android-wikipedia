@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import org.json.JSONObject;
 import org.wikipedia.Constants;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.analytics.ProtectedEditAttemptFunnel;
 import org.wikipedia.auth.AccountUtil;

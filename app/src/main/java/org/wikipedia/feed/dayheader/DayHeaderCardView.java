@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.feed.model.Card;
 import org.wikipedia.feed.view.FeedAdapter;
 import org.wikipedia.feed.view.FeedCardView;

@@ -9,7 +9,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.events.ArticleSavedOrDeletedEvent;
 import org.wikipedia.feed.view.ActionFooterView;

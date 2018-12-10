@@ -9,7 +9,7 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.espresso.search.SearchBehaviors;
 import org.wikipedia.espresso.util.ScreenshotTools;
 import org.wikipedia.page.PageActivity;

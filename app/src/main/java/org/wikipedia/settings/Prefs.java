@@ -7,7 +7,7 @@ import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.analytics.SessionData;
 import org.wikipedia.analytics.SessionFunnel;
 import org.wikipedia.dataclient.SharedPreferenceCookieManager;

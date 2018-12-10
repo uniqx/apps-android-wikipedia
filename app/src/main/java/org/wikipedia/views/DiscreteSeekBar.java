@@ -12,7 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 @SuppressLint("AppCompatCustomView")
 public class DiscreteSeekBar extends SeekBar {

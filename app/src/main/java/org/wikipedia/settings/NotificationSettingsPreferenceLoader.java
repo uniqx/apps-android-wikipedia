@@ -9,7 +9,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 class NotificationSettingsPreferenceLoader extends BasePreferenceLoader {
 

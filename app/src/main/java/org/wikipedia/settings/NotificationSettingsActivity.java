@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.activity.SingleFragmentActivity;
 import org.wikipedia.analytics.NotificationPreferencesFunnel;

@@ -28,7 +28,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.wikipedia.BackPressedHandler;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.activity.FragmentUtil;
 import org.wikipedia.database.DatabaseClient;

@@ -8,7 +8,7 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.TextView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.richtext.RichTextUtil;
 import org.wikipedia.util.ResourceUtil;
 import org.wikipedia.views.FaceAndColorDetectImageView;

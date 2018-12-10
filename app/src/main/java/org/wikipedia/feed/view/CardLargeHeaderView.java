@@ -15,7 +15,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.views.FaceAndColorDetectImageView;
 
 import butterknife.BindView;

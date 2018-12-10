@@ -15,7 +15,7 @@ import android.view.animation.AnimationUtils;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.views.ViewUtil;
 
 import java.util.List;

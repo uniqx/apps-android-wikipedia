@@ -3,7 +3,7 @@ package org.wikipedia.descriptions;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.onboarding.OnboardingFragment;
 
 public class DescriptionEditTutorialFragment extends OnboardingFragment {

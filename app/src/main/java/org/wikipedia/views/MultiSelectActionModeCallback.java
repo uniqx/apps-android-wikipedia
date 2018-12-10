@@ -5,7 +5,7 @@ import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 public abstract class MultiSelectActionModeCallback implements ActionMode.Callback {
     private static final String ACTION_MODE_TAG = "multiSelectActionMode";

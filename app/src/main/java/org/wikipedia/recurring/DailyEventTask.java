@@ -3,7 +3,7 @@ package org.wikipedia.recurring;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.analytics.DailyStatsFunnel;
 

@@ -3,7 +3,7 @@ package org.wikipedia.page;
 import android.support.annotation.NonNull;
 
 import org.wikipedia.LongPressHandler;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.dataclient.WikiSite;
 import org.wikipedia.history.HistoryEntry;
 import org.wikipedia.readinglist.AddToReadingListDialog;

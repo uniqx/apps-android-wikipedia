@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.page.action.PageActionTab;
 import org.wikipedia.util.FeedbackUtil;
 import org.wikipedia.views.ConfigurableTabLayout;

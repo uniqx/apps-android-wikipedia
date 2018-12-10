@@ -14,7 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.util.DimenUtil;
 import org.wikipedia.views.FaceAndColorDetectImageView;
 import org.wikipedia.views.LinearLayoutOverWebView;

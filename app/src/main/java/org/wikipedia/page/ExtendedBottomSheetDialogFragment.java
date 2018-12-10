@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.ViewGroup;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.WikipediaApp;
 import org.wikipedia.util.DimenUtil;
 

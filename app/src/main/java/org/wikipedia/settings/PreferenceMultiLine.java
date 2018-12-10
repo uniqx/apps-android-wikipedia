@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 public class PreferenceMultiLine extends Preference {
 

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.analytics.FindInPageFunnel;
 import org.wikipedia.util.DeviceUtil;
 import org.wikipedia.util.ResourceUtil;

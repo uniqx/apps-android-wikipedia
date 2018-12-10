@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.edit.EditSectionActivity;
 import org.wikipedia.page.PageTitle;
 import org.wikipedia.views.ViewAnimations;

@@ -61,6 +61,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import info.guardianproject.apt.wikipedia.BuildConfig;
+import info.guardianproject.apt.wikipedia.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.internal.functions.Functions;
 import io.reactivex.plugins.RxJavaPlugins;

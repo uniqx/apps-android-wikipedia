@@ -5,7 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 
 /**
  * Boilerplate for a {@link android.support.v4.app.FragmentActivity} containing a single stack of

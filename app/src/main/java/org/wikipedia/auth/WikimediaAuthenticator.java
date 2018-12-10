@@ -12,8 +12,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.wikipedia.BuildConfig;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.BuildConfig;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.analytics.LoginFunnel;
 import org.wikipedia.login.LoginActivity;
 

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.apache.commons.lang3.StringUtils;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.feed.model.Card;
 import org.wikipedia.history.HistoryEntry;
 import org.wikipedia.page.PageAvailableOfflineHandler;

@@ -5,7 +5,7 @@ import android.view.ContextThemeWrapper;
 import android.widget.EditText;
 
 import org.junit.Test;
-import org.wikipedia.R;
+import info.guardianproject.apt.wikipedia.R;
 import org.wikipedia.testlib.TestLatch;
 
 import java.util.List;
