@@ -21,6 +21,7 @@ import org.wikipedia.login.LoginActivity;
 import org.wikipedia.readinglist.sync.ReadingListSyncAdapter;
 import org.wikipedia.settings.languages.WikipediaLanguagesActivity;
 import org.wikipedia.theme.ThemeFittingRoomActivity;
+import org.wikipedia.util.ReleaseUtil;
 
 import static org.wikipedia.Constants.ACTIVITY_REQUEST_ADD_A_LANGUAGE;
 
@@ -57,9 +58,6 @@ class SettingsPreferenceLoader extends BasePreferenceLoader {
 
         if (ReleaseUtil.isPreBetaRelease()) {
             loadPreferences(R.xml.preferences_experimental);
-            Preference offlineLibPref = findPreference(R.string.preference_key_enable_offline_library);
-            offlineLibPref.setOnPreferenceChangeListener(new OfflineLibraryEnableListener());
-            offlineLibPref.setSummary(StringUtil.fromHtml(getPreferenceHost().getString(R.string.preference_summary_enable_offline_library)));
 
             Preference useTorPreference = findPreference(R.string.preference_key_use_tor);
             useTorPreference.setOnPreferenceChangeListener((preference, newValue) -> {
