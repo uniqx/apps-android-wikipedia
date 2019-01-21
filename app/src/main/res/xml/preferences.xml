@@ -63,5 +63,10 @@
             android:defaultValue="true"
             android:title="@string/preference_title_auto_upload_crash_reports"
             android:summary="@string/preference_summary_auto_upload_crash_reports" />
+        <org.wikipedia.settings.SwitchPreferenceMultiLine
+            android:key="@string/preference_key_pluggable_transport_enabled"
+            android:defaultValue="false"
+            android:title="@string/preference_title_pluggable_transport_enabled"
+            android:summary="@string/preference_summary_pluggable_transport_enabled" />
     </PreferenceCategory>
 </android.support.v7.preference.PreferenceScreen>

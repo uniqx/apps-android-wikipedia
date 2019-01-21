@@ -114,4 +114,9 @@
     <string name="add_square_brackets_to_string">[%s]</string>
     <string name="empty" />
 
+    <string-array name="pluggable_transports_default_bridges">
+        <item>obfs4 37.218.247.26:443 no-fingerpring cert=72cefPoNMgI5qFhHTWGvs+LV4jIroE4i/0RyJRLOCGTe9rZTOy5vT2I1QnNEuWkK044SQg iat-mode=0</item>
+        <item>obfs4 37.218.241.9:443 no-fingerprint cert=WmMW6/19yKbyMih2i5/nLCG3/0ny3QuUvConKAq3gxfDjzYIrc40Sl2TbWml8bzTimALZA iat-mode=0</item>
+    </string-array>
+
 </resources>

@@ -1,6 +1,7 @@
 package org.wikipedia.settings;
 
 import android.os.Bundle;
+import android.support.v7.preference.Preference;
 import android.support.v7.preference.SwitchPreferenceCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 
 import org.wikipedia.R;
 import org.wikipedia.WikipediaApp;
+import org.wikipedia.events.PluggableTrasportSettingsChangedEvent;
 import org.wikipedia.events.ReadingListsEnableSyncStatusEvent;
 import org.wikipedia.events.ReadingListsEnabledStatusEvent;
 import org.wikipedia.events.ReadingListsMergeLocalDialogEvent;
@@ -105,6 +107,22 @@ public class SettingsFragment extends PreferenceLoaderFragment {
         }
     }
 
+    private void setPluggableTransportPrefs(boolean enabled) {
+        if (preferenceLoader != null) {
+            ((SwitchPreferenceCompat) preferenceLoader.findPreference(R.string.preference_key_pluggable_transport_enabled)).setChecked(enabled);
+        }
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        if (getString(R.string.preference_key_pluggable_transport_enabled).equals(preference.getKey())){
+            if (Prefs.isPluggableTransportEnabled()) {
+                new PluggableTransportSettingsDialog().show(getFragmentManager(), "dialog");
+            }
+        }
+        return super.onPreferenceTreeClick(preference);
+    }
+
     private class EventBusConsumer implements Consumer<Object> {
         @Override
         public void accept(Object event) throws Exception {
@@ -116,6 +134,8 @@ public class SettingsFragment extends PreferenceLoaderFragment {
                 setReadingListSyncPref(false);
             } else if (event instanceof ReadingListsEnableSyncStatusEvent) {
                 setReadingListSyncPref(Prefs.isReadingListSyncEnabled());
+            } else if (event instanceof PluggableTrasportSettingsChangedEvent) {
+                setPluggableTransportPrefs(Prefs.isPluggableTransportEnabled());
             }
         }
     }

@@ -781,4 +781,8 @@
     <string name="main_drawer_help">Help</string>
     <string name="main_drawer_login">Log in / join Wikipedia</string>
 
+    <string name="preference_title_pluggable_transport_enabled">Pluggable Transport</string>
+    <string name="preference_summary_pluggable_transport_enabled">Access Wikipedias servers in the Internet over a pluggable transport bridge.</string>
+    <string name="dialog_pluggable_transport_settings_random_default_bridge">Get another bridge</string>
+
 </resources>

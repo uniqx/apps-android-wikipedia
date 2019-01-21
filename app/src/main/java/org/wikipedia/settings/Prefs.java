@@ -809,5 +809,21 @@ public final class Prefs {
         setBoolean(R.string.preference_key_history_offline_articles_toast, showToast);
     }
 
+    public static boolean isPluggableTransportEnabled() {
+        return getBoolean(R.string.preference_key_pluggable_transport_enabled, false);
+    }
+
+    public static void setPluggableTransportEnabled(boolean enabled) {
+        setBoolean(R.string.preference_key_pluggable_transport_enabled, enabled);
+    }
+
+    public static String getPluggableTransportBridgeLine() {
+        return getString(R.string.preference_key_pluggable_transport_bridge_line, "");
+    }
+
+    public static void setPluggableTransportBridgeLine(String bridgeLine) {
+        setString(R.string.preference_key_pluggable_transport_bridge_line, bridgeLine);
+    }
+
     private Prefs() { }
 }
