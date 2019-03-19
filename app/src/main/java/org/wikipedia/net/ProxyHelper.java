@@ -31,7 +31,7 @@ public class ProxyHelper {
         appContext = context.getApplicationContext();
 
         proxyHost = "localhost";
-        proxyPort = 8118;
+        proxyPort = 28888;
 
 
     }

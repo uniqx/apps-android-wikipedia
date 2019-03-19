@@ -21,6 +21,8 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
+import org.littleshoot.proxy.HttpProxyServer;
+import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 import org.wikipedia.analytics.FunnelManager;
 import org.wikipedia.analytics.SessionFunnel;
 import org.wikipedia.auth.AccountUtil;
@@ -212,6 +214,12 @@ public class WikipediaApp extends Application {
         }.execute();
     }
 
+    public void initLittleProxy(){
+        HttpProxyServer server =
+                DefaultHttpProxyServer.bootstrap()
+                        .withPort(28888).start();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -224,7 +232,8 @@ public class WikipediaApp extends Application {
 
         zeroHandler = new WikipediaZeroHandler(this);
 
-        initAPT();
+        //initAPT();
+        initLittleProxy();
 
         // HockeyApp exception handling interferes with the test runner, so enable it only for
         // beta and stable releases
