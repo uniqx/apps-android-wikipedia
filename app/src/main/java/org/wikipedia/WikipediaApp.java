@@ -5,12 +5,14 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Window;
 import android.webkit.WebView;
 
@@ -54,13 +56,20 @@ import org.wikipedia.util.log.L;
 import org.wikipedia.views.ViewAnimations;
 import org.wikipedia.zero.WikipediaZeroHandler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.UUID;
 
+import info.pluggabletransports.dispatch.Connection;
+import info.pluggabletransports.dispatch.DispatchConstants;
+import info.pluggabletransports.dispatch.Dispatcher;
+import info.pluggabletransports.dispatch.Transport;
+import info.pluggabletransports.dispatch.transports.Obfs4Transport;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.internal.functions.Functions;
 import io.reactivex.plugins.RxJavaPlugins;
@@ -152,6 +161,57 @@ public class WikipediaApp extends Application {
         return code;
     }
 
+    public void initAPT() {
+
+        new AsyncTask<Void,Void,Void>(){
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                Log.v("#pt", "pt init");
+
+                new Obfs4Transport().register();
+
+                String address = "72.14.182.23:8888";//"208.80.154.224:80"; //wikipedia!
+
+                String pta = "obfs4 37.218.247.26:443 no-fingerpring cert=72cefPoNMgI5qFhHTWGvs+LV4jIroE4i/0RyJRLOCGTe9rZTOy5vT2I1QnNEuWkK044SQg iat-mode=0";
+                String ptb = "obfs4 37.218.241.9:443 no-fingerpring cert=WmMW6/19yKbyMih2i5/nLCG3/0ny3QuUvConKAq3gxfDjzYIrc40Sl2TbWml8bzTimALZA iat-mode=0";
+
+                // String torBridgeLine = "obfs4 72.14.182.23:8888 key-not-used cert=x7i6lumoDE5ApW28e8rwqwCwDLhYYYQu8c0ut6vmc9e+P2VV4YQgtN9F+TzSbHJCrD+dLw iat-mode=0";
+                Properties options = new Properties();
+                Obfs4Transport.setPropertiesFromBridgeString(options,pta);
+
+                Transport transport = Dispatcher.get().getTransport(WikipediaApp.this, DispatchConstants.PT_TRANSPORTS_OBFS4, options);
+                if (transport != null) {
+                    Log.v("#pt", "pt transport intialized");
+                    Connection ptConn = transport.connect(address);// transport.connect(options.getProperty(Obfs4Transport.OPTION_ADDRESS));
+
+                    if (ptConn != null) {
+                        Log.v("#pt", "pt connection intialized");
+
+                        try {
+                            Log.v("#pt", "a");
+                            ptConn.write("GET /index.html HTTP/1.0".getBytes());
+                            Log.v("#pt", "b");
+                            byte[] resp = new byte[1000];
+                            ptConn.read(resp,0,resp.length);
+                            Log.v("#pt", "c");
+                            ptConn.close();
+                            Log.v("#pt", "d");
+                            String log = new String(resp);
+                            Log.i("#pt", log);
+                        } catch (IOException e) {
+                            Log.e("#pt", "pt died", e);
+                        }
+
+
+                    }
+                }
+
+                return null;
+            }
+        }.execute();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -163,6 +223,8 @@ public class WikipediaApp extends Application {
         registerReceiver(connectivityReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         zeroHandler = new WikipediaZeroHandler(this);
+
+        initAPT();
 
         // HockeyApp exception handling interferes with the test runner, so enable it only for
         // beta and stable releases
