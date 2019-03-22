@@ -10,7 +10,9 @@ dependencies {
     implementation 'com.barchart.udt:barchart-udt-bundle:2.3.0'
     implementation 'org.slf4j:slf4j-api:1.7.24'
 
-    implementation 'io.netty:netty-all:4.1.8.Final'
+    implementation 'info.pluggabletransports.aptds:apt-meek-obfs4:1.0.4a'
+
+    api 'io.netty:netty-all:4.1.8.Final'
     /*
     implementation 'io.netty:netty-buffer:4.1.8.Final'
     implementation 'io.netty:netty-codec:4.1.8.Final'
@@ -29,6 +31,7 @@ dependencies {
     implementation ('org.littleshoot:dnssec4j:0.1.6') {
         exclude group: 'org.littleshoot', module: 'dnsjava'
     }
+
 }
 
 sourceCompatibility = "8"

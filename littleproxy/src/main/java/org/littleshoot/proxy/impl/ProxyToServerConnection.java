@@ -33,6 +33,7 @@ import io.netty.handler.traffic.GlobalTrafficShapingHandler;
 import io.netty.util.ReferenceCounted;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+
 import org.littleshoot.proxy.ActivityTracker;
 import org.littleshoot.proxy.ChainedProxy;
 import org.littleshoot.proxy.ChainedProxyAdapter;
@@ -138,7 +139,28 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
      * Minimum size of the adaptive recv buffer when throttling is enabled. 
      */
     private static final int MINIMUM_RECV_BUFFER_SIZE_BYTES = 64;
-    
+
+    public static Socks5Settings socks5Settings = null;
+    public static class Socks5Settings {
+        public Socks5Settings(String socks5Ip, int socks5Port, String socks5User, String socks5Pass) {
+            this.socks5Ip = socks5Ip;
+            this.socks5Port = socks5Port;
+            this.socks5User = socks5User;
+            this.socks5Pass = socks5Pass;
+        }
+        public final String socks5Ip;
+        public final int socks5Port;
+        public final String socks5User;
+        public final String socks5Pass;
+
+        public Socks5Settings(String socks5Ip, int socks5Port) {
+            this.socks5Ip = socks5Ip;
+            this.socks5Port = socks5Port;
+            this.socks5User = null;
+            this.socks5Pass = null;
+        }
+    }
+
     /**
      * Create a new ProxyToServerConnection.
      * 
@@ -870,7 +892,14 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
     private void initChannelPipeline(ChannelPipeline pipeline,
             HttpRequest httpRequest) {
 
-        pipeline.addFirst(new Socks5ProxyHandler(new InetSocketAddress("127.0.0.1", 9050)));
+        if (socks5Settings != null) {
+            if (socks5Settings.socks5User != null && socks5Settings.socks5Pass != null) {
+                pipeline.addFirst(new Socks5ProxyHandler(new InetSocketAddress(socks5Settings.socks5Ip,
+                        socks5Settings.socks5Port), socks5Settings.socks5User, socks5Settings.socks5Pass));
+            } else {
+                pipeline.addFirst(new Socks5ProxyHandler(new InetSocketAddress(socks5Settings.socks5Ip, socks5Settings.socks5Port)));
+            }
+        }
 
         if (trafficHandler != null) {
             pipeline.addLast("global-traffic-shaping", trafficHandler);

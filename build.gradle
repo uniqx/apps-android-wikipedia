@@ -15,5 +15,6 @@ allprojects {
         jcenter()
         google()
         maven { url "https://raw.githubusercontent.com/guardianproject/gpmaven/master"}
+        mavenLocal()
     }
 }

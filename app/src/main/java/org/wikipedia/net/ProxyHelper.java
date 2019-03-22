@@ -23,26 +23,27 @@ public class ProxyHelper {
     private final Context appContext;
     private OkHttpClient okHttpClient;
 
-    private String proxyHost = "";
-    private int proxyPort = -1;
+    private static String proxyHost = "";
+    private static int proxyPort = -1;
 
 
     public ProxyHelper(Context context) {
         appContext = context.getApplicationContext();
+    }
 
-        proxyHost = "localhost";
-        proxyPort = 28888;
-
-
+    public static void setHttpProxy(String proxyHost, int proxyPort) {
+        ProxyHelper.proxyHost = proxyHost;
+        ProxyHelper.proxyPort = proxyPort;
     }
 
     public void configureWebViev(WebView webView) {
         // TODO: maybe ip+port should be configurable
         try {
-            WebkitProxy.setProxy(WikipediaApp.class.getName(), appContext, webView, "localhost", 8118);
+            WebkitProxy.setProxy(WikipediaApp.class.getName(), appContext, webView, proxyHost, proxyPort);
             L.d(String.format("ProxyHelper: configured another WebView ", webView.getId()));
         } catch (Exception e) {
-            L.e(e);
+            //L.e(e);
+            Log.e("#pt", "could not webkit proxy", e);
         }
     }
 

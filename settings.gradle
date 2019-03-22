@@ -1,1 +1,1 @@
-include ':app', ':littleproxy'
+include ':app', ':littleproxy', ':TcpForwardDaemon'
