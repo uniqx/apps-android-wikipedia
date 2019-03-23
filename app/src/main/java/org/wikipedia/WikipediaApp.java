@@ -3,11 +3,14 @@ package org.wikipedia;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
@@ -107,11 +110,6 @@ public class WikipediaApp extends Application {
 
     private static WikipediaApp INSTANCE;
 
-    static {
-        ProxyHelper.setHttpProxy("127.0.0.1", 8088);
-        initAPT();
-    }
-
     public WikipediaApp() {
         INSTANCE = this;
     }
@@ -171,7 +169,7 @@ public class WikipediaApp extends Application {
         return code;
     }
 
-    class AptConfig {
+    static class AptConfig {
         final HttpToSocksProxyConfig httpProxyConfig;
         final TcpToSocksForwardDaemonConfig forwardDaemonConfig;
         final PtBridgeConfig ptBridgeConfig;
@@ -185,52 +183,62 @@ public class WikipediaApp extends Application {
         }
     }
 
-    class HttpToSocksProxyConfig extends ProxyToServerConnection.Socks5Settings {
+    static class HttpToSocksProxyConfig extends ProxyToServerConnection.Socks5Settings {
         HttpToSocksProxyConfig(String host, int port){
             super(host, port);
         }
     };
 
-    class TcpToSocksForwardDaemonConfig extends ProxyToServerConnection.Socks5Settings {
+    static class TcpToSocksForwardDaemonConfig extends ProxyToServerConnection.Socks5Settings {
         TcpToSocksForwardDaemonConfig(String host, int port) {
             super(host, port);
         }
     }
 
-    class PtBridgeConfig extends ProxyToServerConnection.Socks5Settings {
+    static class PtBridgeConfig extends ProxyToServerConnection.Socks5Settings {
         PtBridgeConfig(String host, int port, String user, String pass) {
             super(host, port, user, pass);
         }
     }
 
-    class PtClientConfig extends ProxyToServerConnection.Socks5Settings {
+    static class PtClientConfig extends ProxyToServerConnection.Socks5Settings {
         PtClientConfig(String host, int port) {
             super(host, port);
         }
     }
 
     public static void initTcpForwardDaemon(AptConfig aptConfig) {
+
+        TcpForwardDaemon forwardDaemon = new TcpForwardDaemon(
+                aptConfig.forwardDaemonConfig.socks5Ip,
+                aptConfig.forwardDaemonConfig.socks5Port,
+                aptConfig.ptClientConfig.socks5Ip,
+                aptConfig.ptClientConfig.socks5Port,
+                aptConfig.ptBridgeConfig.socks5Ip,
+                aptConfig.ptBridgeConfig.socks5Port,
+                aptConfig.ptBridgeConfig.socks5User,
+                aptConfig.ptBridgeConfig.socks5Pass);
+
+        forwardDaemon.setErrorListener(new TcpForwardDaemon.ErrorListener() {
+            @Override
+            public void error(Throwable error) {
+                Log.e("#pt", "tcp forward daemon encountered an error", error);
+            }
+        });
+
         new Thread(){
             @Override
             public void run() {
-                new TcpForwardDaemon(
-                        aptConfig.forwardDaemonConfig.socks5Ip,
-                        aptConfig.forwardDaemonConfig.socks5Port,
-                        aptConfig.ptClientConfig.socks5Ip,
-                        aptConfig.ptClientConfig.socks5Port,
-                        aptConfig.ptBridgeConfig.socks5Ip,
-                        aptConfig.ptBridgeConfig.socks5Port,
-                        aptConfig.ptBridgeConfig.socks5User,
-                        aptConfig.ptBridgeConfig.socks5Pass)
-                        .run();
+                forwardDaemon.run();
             }
-        };
+        }.start();
+
         Log.i("#pt", "initialized tcp forward daemon: " + aptConfig.forwardDaemonConfig.socks5Ip + ":" + aptConfig.forwardDaemonConfig.socks5Port);
 
         initLittleProxy(aptConfig.httpProxyConfig, aptConfig.forwardDaemonConfig);
     }
 
-    public static void initAPT() {
+    public static void initAPT(Context context) {
 
         new AsyncTask<Void, Void, AptConfig>() {
             @Override
@@ -254,7 +262,7 @@ public class WikipediaApp extends Application {
                 PtClientConfig ptClientConfig = null;
                 //PtBridgeConfig ptBridgeConfig = null;
 
-                Obfs4Transport transport = (Obfs4Transport) Dispatcher.get().getTransport(WikipediaApp.this, DispatchConstants.PT_TRANSPORTS_OBFS4, options);
+                Obfs4Transport transport = (Obfs4Transport) Dispatcher.get().getTransport(context, DispatchConstants.PT_TRANSPORTS_OBFS4, options);
 
                 if (transport != null) {
                     Log.v("#pt", "pt transport intialized");
@@ -288,7 +296,7 @@ public class WikipediaApp extends Application {
         }.execute();
     }
 
-    public String parseBridgelineArgs(String bridgeline) {
+    public static String parseBridgelineArgs(String bridgeline) {
         StringBuilder ret = new StringBuilder();
         String[] tokens = bridgeline.split(" ");
         for (int i=3; i<tokens.length; i++) {
@@ -325,6 +333,22 @@ public class WikipediaApp extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // APT
+        new Thread(){
+            @Override
+            public void run() {
+                new TcpForwardDaemon("127.0.0.1", 9099, "127.0.0.1", 9050).run();
+            }
+        }.start();
+        new Thread(){
+            @Override
+            public void run() {
+                initLittleProxy(new HttpToSocksProxyConfig("127.0.0.1", 8088), new TcpToSocksForwardDaemonConfig("127.0.0.1", 9099));
+            }
+        }.start();
+        ProxyHelper.setHttpProxy("127.0.0.1", 8088);
+        //initAPT(this.getApplicationContext());
+
         WikiSite.setDefaultBaseUrl(Prefs.getMediaWikiBaseUrl());
 
         // Register here rather than in AndroidManifest.xml so that we can target Android N.
@@ -332,8 +356,6 @@ public class WikipediaApp extends Application {
         registerReceiver(connectivityReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         zeroHandler = new WikipediaZeroHandler(this);
-
-        initAPT();
 
         // HockeyApp exception handling interferes with the test runner, so enable it only for
         // beta and stable releases

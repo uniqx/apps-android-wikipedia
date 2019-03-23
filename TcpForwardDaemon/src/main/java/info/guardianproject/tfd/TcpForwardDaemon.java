@@ -7,7 +7,6 @@ import com.runjva.sourceforge.jsocks.protocol.UserPasswordAuthentication;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -54,7 +53,7 @@ public class TcpForwardDaemon {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -73,8 +72,8 @@ public class TcpForwardDaemon {
 
         @Override
         public void run() {
+            Socket serverSocket = null;
             try {
-                Socket serverSocket;
                 if (proxyHost != null && proxyPort > 0) {
                     if (proxyUser != null && proxyPass != null) {
                         Socks5Proxy proxy = new Socks5Proxy(proxyHost, proxyPort);
@@ -112,16 +111,48 @@ public class TcpForwardDaemon {
                 serverSocket.close();
                 clientSocket.close();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                if (errorListener != null) {
+                    errorListener.error(e);
+                }
+            } finally {
+                safeClose(serverSocket);
+                safeClose(clientSocket);
             }
 
         }
     }
 
+    private void safeClose(Socket socket) {
+        if (socket != null) {
+            try {
+                socket.close();
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    private ErrorListener errorListener = null;
+
+    public interface ErrorListener{
+        void error(Throwable error);
+    }
+
+    public void setErrorListener(ErrorListener errorListener) {
+        this.errorListener = errorListener;
+    }
+
+    /**
+     * for quick and dirty testing whether if this thing really works.
+     */
     public static void main(String[] args) {
-        new TcpForwardDaemon("127.0.0.1", 9099, "127.0.0.1", 9050).run();
+        // forward port 9099 to tor socks proxy 9050,
+        //new TcpForwardDaemon("127.0.0.1", 9099, "127.0.0.1", 9050).run();
+
+        // forward over remote obfs4 socks proxy:
+        new TcpForwardDaemon("127.0.0.1", 9099, "37.218.247.26", 443, "127.0.0.1", 43297, "cert=72cefPoNMgI5qFhHTWGvs+LV4jIroE4i/0RyJRLOCGTe9rZTOy5vT2I1QnNEuWkK044SQg;iat-mode=0", "\u0000").run();
+
+
+        // client useage example: curl --socks5-host 127.0.0.1:9099 guardianproject.info
     }
 }
