@@ -72,6 +72,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 import info.guardianproject.tfd.TcpForwardDaemon;
 import info.pluggabletransports.dispatch.Connection;
@@ -170,14 +171,14 @@ public class WikipediaApp extends Application {
     }
 
     static class AptConfig {
-        final HttpToSocksProxyConfig httpProxyConfig;
-        final TcpToSocksForwardDaemonConfig forwardDaemonConfig;
+        //final HttpToSocksProxyConfig httpProxyConfig;
+        //final TcpToSocksForwardDaemonConfig forwardDaemonConfig;
         final PtBridgeConfig ptBridgeConfig;
         final PtClientConfig ptClientConfig;
 
-        AptConfig(HttpToSocksProxyConfig httpProxyConfig, TcpToSocksForwardDaemonConfig forwardDaemonConfig, PtClientConfig ptClientConfig, PtBridgeConfig ptBridgeConfig) {
-            this.httpProxyConfig = httpProxyConfig;
-            this.forwardDaemonConfig = forwardDaemonConfig;
+        AptConfig(/*HttpToSocksProxyConfig httpProxyConfig, TcpToSocksForwardDaemonConfig forwardDaemonConfig,*/ PtClientConfig ptClientConfig, PtBridgeConfig ptBridgeConfig) {
+            //this.httpProxyConfig = httpProxyConfig;
+            //this.forwardDaemonConfig = forwardDaemonConfig;
             this.ptBridgeConfig = ptBridgeConfig;
             this.ptClientConfig = ptClientConfig;
         }
@@ -207,17 +208,17 @@ public class WikipediaApp extends Application {
         }
     }
 
-    public static void initTcpForwardDaemon(AptConfig aptConfig) {
+    public static void initTcpForwardDaemon(TcpToSocksForwardDaemonConfig forwardDaemonConfig, PtClientConfig ptClientConfig, PtBridgeConfig ptBridgeConfig) {
 
         TcpForwardDaemon forwardDaemon = new TcpForwardDaemon(
-                aptConfig.forwardDaemonConfig.socks5Ip,
-                aptConfig.forwardDaemonConfig.socks5Port,
-                aptConfig.ptClientConfig.socks5Ip,
-                aptConfig.ptClientConfig.socks5Port,
-                aptConfig.ptBridgeConfig.socks5Ip,
-                aptConfig.ptBridgeConfig.socks5Port,
-                aptConfig.ptBridgeConfig.socks5User,
-                aptConfig.ptBridgeConfig.socks5Pass);
+                forwardDaemonConfig.socks5Ip,
+                forwardDaemonConfig.socks5Port,
+                ptBridgeConfig.socks5Ip,
+                ptBridgeConfig.socks5Port,
+                ptClientConfig.socks5Ip,
+                ptClientConfig.socks5Port,
+                ptBridgeConfig.socks5User,
+                ptBridgeConfig.socks5Pass);
 
         forwardDaemon.setErrorListener(new TcpForwardDaemon.ErrorListener() {
             @Override
@@ -233,67 +234,7 @@ public class WikipediaApp extends Application {
             }
         }.start();
 
-        Log.i("#pt", "initialized tcp forward daemon: " + aptConfig.forwardDaemonConfig.socks5Ip + ":" + aptConfig.forwardDaemonConfig.socks5Port);
-
-        initLittleProxy(aptConfig.httpProxyConfig, aptConfig.forwardDaemonConfig);
-    }
-
-    public static void initAPT(Context context) {
-
-        new AsyncTask<Void, Void, AptConfig>() {
-            @Override
-            protected AptConfig doInBackground(Void... voids) {
-
-                Log.v("#pt", "pt init");
-
-                new Obfs4Transport().register();
-
-
-                String bridgeline = "obfs4 37.218.247.26:443 no-fingerpring cert=72cefPoNMgI5qFhHTWGvs+LV4jIroE4i/0RyJRLOCGTe9rZTOy5vT2I1QnNEuWkK044SQg iat-mode=0";
-                //String bridgelineB = "obfs4 37.218.241.9:443 no-fingerpring cert=WmMW6/19yKbyMih2i5/nLCG3/0ny3QuUvConKAq3gxfDjzYIrc40Sl2TbWml8bzTimALZA iat-mode=0";
-
-                // String torBridgeLine = "obfs4 72.14.182.23:8888 key-not-used cert=x7i6lumoDE5ApW28e8rwqwCwDLhYYYQu8c0ut6vmc9e+P2VV4YQgtN9F+TzSbHJCrD+dLw iat-mode=0";
-                Properties options = new Properties();
-                Obfs4Transport.setPropertiesFromBridgeString(options, bridgeline);
-
-                PtBridgeConfig ptBridgeConfig = new PtBridgeConfig(parseBridgelineHost(bridgeline), parseBridgelinePort(bridgeline), parseBridgelineArgs(bridgeline), "\u0000");
-                TcpToSocksForwardDaemonConfig forwardDaemonConfig = new TcpToSocksForwardDaemonConfig("127.0.0.1", 9090);
-                HttpToSocksProxyConfig httpProxyConfig = new HttpToSocksProxyConfig("127.0.0.1", 8088);
-                PtClientConfig ptClientConfig = null;
-                //PtBridgeConfig ptBridgeConfig = null;
-
-                Obfs4Transport transport = (Obfs4Transport) Dispatcher.get().getTransport(context, DispatchConstants.PT_TRANSPORTS_OBFS4, options);
-
-                if (transport != null) {
-                    Log.v("#pt", "pt transport intialized");
-                    //String address = "72.14.182.23:8888";//"208.80.154.224:80"; //wikipedia!
-                    Connection ptConn = transport.connect(ptBridgeConfig.socks5Ip + ":" + ptBridgeConfig.socks5Port);// transport.connect(options.getProperty(Obfs4Transport.OPTION_ADDRESS));
-
-                    if (ptConn != null) {
-                        ptClientConfig = new PtClientConfig(ptConn.getLocalAddress().getHostAddress(), ptConn.getLocalPort());
-                        Log.v("#pt", "pt client initialized: " + ptClientConfig.socks5Ip + ":" + ptClientConfig.socks5Port);
-                    } else {
-                        Log.e("#pt", "could not start APT", new RuntimeException("initializing pt connection failed."));
-                        return null;
-                    }
-                } else {
-                    Log.e("#pt", "could not start APT", new RuntimeException("initializing pt transport failed."));
-                    return null;
-                }
-
-
-                return new AptConfig(httpProxyConfig, forwardDaemonConfig, ptClientConfig, ptBridgeConfig);
-            }
-
-            @Override
-            protected void onPostExecute(AptConfig aptConfig) {
-                if (aptConfig != null) {
-                    initTcpForwardDaemon(aptConfig);
-                } else {
-                    Log.i("#pt", "skip initializing tcp over pt forward daemon");
-                }
-            }
-        }.execute();
+        Log.i("#pt", "initialized tcp forward daemon: " + forwardDaemonConfig.socks5Ip + ":" + forwardDaemonConfig.socks5Port);
     }
 
     public static String parseBridgelineArgs(String bridgeline) {
@@ -329,25 +270,42 @@ public class WikipediaApp extends Application {
         Log.i("#pt", "initialized littleproxy: " + httpProxyConfig.socks5Ip + ":" + httpProxyConfig.socks5Port);
     }
 
+    public static AptConfig initApt(){
+
+        PtClientConfig ptClientConfig = null;
+        PtBridgeConfig ptBridgeConfig = null;
+
+        String bridgeline = "obfs4 37.218.247.26:443 no-fingerpring cert=72cefPoNMgI5qFhHTWGvs+LV4jIroE4i/0RyJRLOCGTe9rZTOy5vT2I1QnNEuWkK044SQg iat-mode=0";
+        new Obfs4Transport().register();
+        Properties options = new Properties();
+        Obfs4Transport.setPropertiesFromBridgeString(options, bridgeline);
+        Obfs4Transport transport = (Obfs4Transport) Dispatcher.get().getTransport(INSTANCE, DispatchConstants.PT_TRANSPORTS_OBFS4, options);
+        Connection connection = transport.connect(options.getProperty("address"));
+        if (connection != null) {
+            ptClientConfig = new PtClientConfig(connection.getLocalAddress().getHostAddress(), connection.getLocalPort());
+            ptBridgeConfig = new PtBridgeConfig(connection.getRemoteAddress().getHostAddress(), connection.getRemotePort(), connection.getProxyUsername(), connection.getProxyPassword());
+        }
+        return new AptConfig(ptClientConfig, ptBridgeConfig);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         // APT
+        HttpToSocksProxyConfig littleProxyConfig = new HttpToSocksProxyConfig("127.0.0.1", 8088);
+        ProxyHelper.setHttpProxy(littleProxyConfig.socks5Ip, littleProxyConfig.socks5Port);
         new Thread(){
             @Override
             public void run() {
-                new TcpForwardDaemon("127.0.0.1", 9099, "127.0.0.1", 9050).run();
+                AptConfig config = initApt();
+
+                TcpToSocksForwardDaemonConfig forwardDaemonConfig = new TcpToSocksForwardDaemonConfig("127.0.0.1", 9099);
+                initTcpForwardDaemon(forwardDaemonConfig, config.ptClientConfig, config.ptBridgeConfig);
+
+                initLittleProxy(littleProxyConfig, forwardDaemonConfig);
             }
         }.start();
-        new Thread(){
-            @Override
-            public void run() {
-                initLittleProxy(new HttpToSocksProxyConfig("127.0.0.1", 8088), new TcpToSocksForwardDaemonConfig("127.0.0.1", 9099));
-            }
-        }.start();
-        ProxyHelper.setHttpProxy("127.0.0.1", 8088);
-        //initAPT(this.getApplicationContext());
 
         WikiSite.setDefaultBaseUrl(Prefs.getMediaWikiBaseUrl());
 
