@@ -63,7 +63,9 @@ import org.wikipedia.util.log.L;
 import org.wikipedia.views.ViewAnimations;
 import org.wikipedia.zero.WikipediaZeroHandler;
 
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -220,12 +222,7 @@ public class WikipediaApp extends Application {
                 ptBridgeConfig.socks5User,
                 ptBridgeConfig.socks5Pass);
 
-        forwardDaemon.setErrorListener(new TcpForwardDaemon.ErrorListener() {
-            @Override
-            public void error(Throwable error) {
-                Log.e("#pt", "tcp forward daemon encountered an error", error);
-            }
-        });
+        forwardDaemon.setErrorListener(error -> Log.e("#pt", "tcp forward daemon encountered an error", error));
 
         new Thread(){
             @Override
@@ -235,6 +232,33 @@ public class WikipediaApp extends Application {
         }.start();
 
         Log.i("#pt", "initialized tcp forward daemon: " + forwardDaemonConfig.socks5Ip + ":" + forwardDaemonConfig.socks5Port);
+    }
+
+    private int initUpstreamProxy (final int localHttpPort, int ptSocksPort, String username, String password) {
+        try {
+            final StringBuffer socksProxy = new StringBuffer();
+            socksProxy.append("socks5://");
+            socksProxy.append(URLEncoder.encode(username, "UTF-8"));
+            socksProxy.append(":");
+            socksProxy.append(URLEncoder.encode(password, "UTF-8"));
+            socksProxy.append('@');
+            socksProxy.append("127.0.0.1:");
+            socksProxy.append(ptSocksPort);
+
+            Log.d("Proxy", "proxy" + socksProxy.toString());
+
+            new Thread() {
+                public void run() {
+                    // TODO;
+                    // Helloproxy.startProxy(":" + localHttpPort, socksProxy.toString());
+                }
+            }.start();
+
+            return localHttpPort;
+        } catch (UnsupportedEncodingException e) {
+            Log.e("#pt", "", e);
+        }
+        return -1;
     }
 
     public static String parseBridgelineArgs(String bridgeline) {
@@ -247,18 +271,6 @@ public class WikipediaApp extends Application {
             ret.append(tokens[i]);
         }
         return ret.toString();
-    }
-
-    public static String parseBridgelineHost(String bridgeline) {
-        String[] tockes = bridgeline.split(" ");
-        String[] addrTokens = tockes[1].split(":");
-        return TextUtils.join(":", Arrays.copyOfRange(addrTokens, 0, addrTokens.length-1));
-    }
-
-    public static int parseBridgelinePort(String bridgeline) {
-        String[] tockes = bridgeline.split(" ");
-        String[] addrTokens = tockes[1].split(":");
-        return Integer.parseInt(addrTokens[addrTokens.length-1]);
     }
 
     public static void initLittleProxy(HttpToSocksProxyConfig httpProxyConfig, TcpToSocksForwardDaemonConfig forwardDaemonConfig){
